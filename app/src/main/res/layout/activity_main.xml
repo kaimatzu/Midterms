@@ -56,7 +56,10 @@
                 android:layout_width="28dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false"
                 android:minHeight="48dp"
                 android:text="0" />
         </TableRow>
@@ -202,7 +205,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Bill"
-        android:inputType="textPersonName"
+        android:inputType="none"
+        android:focusable="false"
+        android:clickable="false"
+        android:longClickable="false"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"

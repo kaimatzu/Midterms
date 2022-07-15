@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -21,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -48,8 +51,28 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO Milestone A: Use Day-Night mode.
     private void nightModeListenerMethod() {
-
+        ConstraintLayout clMain = findViewById(R.id.clMain);
+        TextView tvTitle = findViewById(R.id.tvTitle);
+        TextView tvLblPrev = findViewById(R.id.tvLblPrev);
+        EditText etPrev = findViewById(R.id.etPrev);
+        Switch swNight = findViewById(R.id.swNight);
+        swNight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    clMain.setBackgroundColor(Color.BLACK);
+                    tvTitle.setTextColor(Color.WHITE);
+                    tvLblPrev.setTextColor(Color.WHITE);
+                    etPrev.setTextColor(Color.WHITE);
+                } else {
+                    clMain.setBackgroundColor(Color.WHITE);
+                    tvTitle.setTextColor(Color.BLACK);
+                    tvLblPrev.setTextColor(Color.BLACK);
+                    etPrev.setTextColor(Color.BLACK);
+                }
+            }
+        });
     }
+
 
     // TODO Milestone B: Show History.
     private void setHistoryAdapter() {
