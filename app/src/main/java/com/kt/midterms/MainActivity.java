@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         pipeTypes.add(new Pipe("Arad", 0.2));
         pipeTypes.add(new Pipe("Ace", 0.5));
         pipeTypes.add(new Pipe("Ace", 0.2));
-        Spinner spPipe = findViewById(R.id.spPipe);
+        Spinner spPipe = findViewById(R.id. spPipe);
         pipeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, pipeTypes);
         spPipe.setAdapter(pipeAdapter);
     }
