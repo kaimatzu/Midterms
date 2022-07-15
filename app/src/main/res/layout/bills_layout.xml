@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/tvMonthLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/tvMonthLbl"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvMonth" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tvPreviousLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -76,24 +76,24 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPrevious" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/tvCurrentLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Current:"
         app:layout_constraintEnd_toStartOf="@+id/tvCurrent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPreviousLbl" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/tvPaymentLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Payment:"
         app:layout_constraintEnd_toStartOf="@+id/tvPayment"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCurrentLbl" />
 
     <TextView
         android:id="@+id/tvPayment"

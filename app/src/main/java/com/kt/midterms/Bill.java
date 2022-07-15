@@ -7,12 +7,14 @@ public class Bill {
     int pack;
     int month;
 
-    public Bill(int previous, int current, Pipe type, int pack, int month) {
+    boolean nightMode;
+    public Bill(int previous, int current, Pipe type, int pack, int month, boolean nightMode) {
         this.previous = previous;
         this.current = current;
         this.type = type;
         this.pack = pack;
         this.month = month;
+        this.nightMode = nightMode;
     }
 
     // TODO Milestone 3: Calculate bill.

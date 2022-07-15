@@ -3,6 +3,8 @@ package com.kt.midterms;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,10 +34,11 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Pipe> pipeTypes;
     ArrayAdapter<Pipe> pipeAdapter;
     ArrayList<Bill> bills;
+    BillsAdapter billsAdapter;
     int month;
     int pack;
     int last_consumption;
-
+    boolean nightMode = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         setHistoryAdapter();
         nightModeListenerMethod();
         radioGroupCheckOnChangedListener();
+
+
     }
 
     // TODO Milestone A: Use Day-Night mode.
@@ -74,13 +79,17 @@ public class MainActivity extends AppCompatActivity {
         EditText etResult = findViewById(R.id.etResult);
 
         TextView tvLblHistory = findViewById(R.id.tvLblHistory);
+        ListView lvHistory = findViewById(R.id.lvHistory);
+
 
         ColorStateList white = ColorStateList.valueOf(Color.WHITE);
         ColorStateList gray = ColorStateList.valueOf(Color.GRAY);
         swNight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                nightMode = isChecked;
                 if (isChecked) {
                     clMain.setBackgroundColor(Color.BLACK);
+                    swNight.setTextColor(Color.WHITE);
                     tvTitle.setTextColor(Color.WHITE);
 
                     tvLblPrev.setTextColor(Color.WHITE);
@@ -106,8 +115,35 @@ public class MainActivity extends AppCompatActivity {
                     etResult.setBackgroundTintList(white);
 
                     tvLblHistory.setTextColor(Color.WHITE);
+                    lvHistory.setDivider(new ColorDrawable(getResources().getColor(R.color.white, getTheme())));
+                    lvHistory.setDividerHeight(2);
+                    for(int i = 0; i < lvHistory.getChildCount(); i++){
+                        View lvView = lvHistory.getChildAt(i);
+                        TextView tvMonthLbl = lvView.findViewById(R.id.tvMonthLbl);
+                        TextView tvMonth = lvView.findViewById(R.id.tvMonth);
+                        TextView tvConsumption = lvView.findViewById(R.id.tvConsumption);
+                        TextView textcubic = lvView.findViewById(R.id.textcubic);
+                        TextView tvPreviousLbl = lvView.findViewById(R.id.tvPreviousLbl);
+                        TextView tvCurrentLbl = lvView.findViewById(R.id.tvCurrentLbl);
+                        TextView tvPaymentLbl = lvView.findViewById(R.id.tvPaymentLbl);
+                        TextView tvPrevious = lvView.findViewById(R.id.tvPrevious);
+                        TextView tvCurrent = lvView.findViewById(R.id.tvCurrent);
+                        TextView tvPayment = lvView.findViewById(R.id.tvPayment);
+
+                        tvMonthLbl.setTextColor(Color.WHITE);
+                        tvMonth.setTextColor(Color.WHITE);
+                        tvConsumption.setTextColor(Color.WHITE);
+                        textcubic.setTextColor(Color.WHITE);
+                        tvPreviousLbl.setTextColor(Color.WHITE);
+                        tvCurrentLbl.setTextColor(Color.WHITE);
+                        tvPaymentLbl.setTextColor(Color.WHITE);
+                        tvPrevious.setTextColor(Color.WHITE);
+                        tvCurrent.setTextColor(Color.WHITE);
+                        tvPayment.setTextColor(Color.WHITE);
+                    }
                 } else {
                     clMain.setBackgroundColor(Color.WHITE);
+                    swNight.setTextColor(Color.GRAY);
                     tvTitle.setTextColor(Color.GRAY);
 
                     tvLblPrev.setTextColor(Color.GRAY);
@@ -133,6 +169,33 @@ public class MainActivity extends AppCompatActivity {
                     etResult.setBackgroundTintList(gray);
 
                     tvLblHistory.setTextColor(Color.GRAY);
+                    lvHistory.setDivider(new ColorDrawable(getResources().getColor(R.color.gray, getTheme())));
+                    lvHistory.setDividerHeight(2);
+                    for(int i = 0; i < lvHistory.getChildCount(); i++){
+                        View lvView = lvHistory.getChildAt(i);
+
+                        TextView tvMonthLbl = lvView.findViewById(R.id.tvMonthLbl);
+                        TextView tvMonth = lvView.findViewById(R.id.tvMonth);
+                        TextView tvConsumption = lvView.findViewById(R.id.tvConsumption);
+                        TextView textcubic = lvView.findViewById(R.id.textcubic);
+                        TextView tvPreviousLbl = lvView.findViewById(R.id.tvPreviousLbl);
+                        TextView tvCurrentLbl = lvView.findViewById(R.id.tvCurrentLbl);
+                        TextView tvPaymentLbl = lvView.findViewById(R.id.tvPaymentLbl);
+                        TextView tvPrevious = lvView.findViewById(R.id.tvPrevious);
+                        TextView tvCurrent = lvView.findViewById(R.id.tvCurrent);
+                        TextView tvPayment = lvView.findViewById(R.id.tvPayment);
+
+                        tvMonthLbl.setTextColor(Color.GRAY);
+                        tvMonth.setTextColor(Color.GRAY);
+                        tvConsumption.setTextColor(Color.GRAY);
+                        textcubic.setTextColor(Color.GRAY);
+                        tvPreviousLbl.setTextColor(Color.GRAY);
+                        tvCurrentLbl.setTextColor(Color.GRAY);
+                        tvPaymentLbl.setTextColor(Color.GRAY);
+                        tvPrevious.setTextColor(Color.GRAY);
+                        tvCurrent.setTextColor(Color.GRAY);
+                        tvPayment.setTextColor(Color.GRAY);
+                    }
                 }
             }
         });
@@ -141,7 +204,9 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO Milestone B: Show History.
     private void setHistoryAdapter() {
-
+        ListView lvHistory = findViewById(R.id.lvHistory);
+        billsAdapter = new BillsAdapter(getBaseContext(), R.layout.bills_layout, bills);
+        lvHistory.setAdapter(billsAdapter);
     }
 
     // // TODO Milestone 3: Calculate bill.
@@ -158,13 +223,17 @@ public class MainActivity extends AppCompatActivity {
                int curr = Integer.parseInt(etCurr.getText().toString());;
                Pipe type = (Pipe) spPipe.getSelectedItem();
 
-               Bill bill = new Bill(last_consumption, curr, type, pack, month);
+               Bill bill = new Bill(last_consumption, curr, type, pack, month, nightMode);
 
                etResult.setText(String.valueOf(bill.get_bill()));
                month++;
                last_consumption = curr;
                etPrev.setText(String.valueOf(last_consumption));
                etCurr.setText("");
+
+               bills.add(bill);
+
+               billsAdapter.notifyDataSetChanged();
            }
        });
     }
