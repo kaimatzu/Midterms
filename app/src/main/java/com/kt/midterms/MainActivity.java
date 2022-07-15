@@ -2,6 +2,7 @@ package com.kt.midterms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,22 +53,86 @@ public class MainActivity extends AppCompatActivity {
     // TODO Milestone A: Use Day-Night mode.
     private void nightModeListenerMethod() {
         ConstraintLayout clMain = findViewById(R.id.clMain);
+        Switch swNight = findViewById(R.id.swNight);
         TextView tvTitle = findViewById(R.id.tvTitle);
+
         TextView tvLblPrev = findViewById(R.id.tvLblPrev);
         EditText etPrev = findViewById(R.id.etPrev);
-        Switch swNight = findViewById(R.id.swNight);
+
+        TextView tvLblNew = findViewById(R.id.tvLblNew);
+        EditText etNew = findViewById(R.id.etNew);
+
+        TextView tvLblPipe = findViewById(R.id.tvLblPipe);
+        Spinner spPipe = findViewById(R.id.spPipe);
+
+        TextView tvLblPackage = findViewById(R.id.tvLblPackage);
+        RadioButton rbPremium = findViewById(R.id.rbPremium);
+        RadioButton rbRegular = findViewById(R.id.rbRegular);
+        RadioButton rbBasic = findViewById(R.id.rbBasic);
+
+        TextView tvLblBill = findViewById(R.id.tvLblBill);
+        EditText etResult = findViewById(R.id.etResult);
+
+        TextView tvLblHistory = findViewById(R.id.tvLblHistory);
+
+        ColorStateList white = ColorStateList.valueOf(Color.WHITE);
+        ColorStateList gray = ColorStateList.valueOf(Color.GRAY);
         swNight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     clMain.setBackgroundColor(Color.BLACK);
                     tvTitle.setTextColor(Color.WHITE);
+
                     tvLblPrev.setTextColor(Color.WHITE);
                     etPrev.setTextColor(Color.WHITE);
+                    etPrev.setBackgroundTintList(white);
+
+                    tvLblNew.setTextColor(Color.WHITE);
+                    etNew.setTextColor(Color.WHITE);
+                    etNew.setBackgroundTintList(white);
+                    etNew.setHintTextColor(Color.WHITE);
+
+                    tvLblPipe.setTextColor(Color.WHITE);
+                    View v = spPipe.getSelectedView();
+                    ((TextView)v).setTextColor(Color.WHITE);
+
+                    tvLblPackage.setTextColor(Color.WHITE);
+                    rbPremium.setTextColor(Color.WHITE);
+                    rbRegular.setTextColor(Color.WHITE);
+                    rbBasic.setTextColor(Color.WHITE);
+
+                    tvLblBill.setTextColor(Color.WHITE);
+                    etResult.setTextColor(Color.WHITE);
+                    etResult.setBackgroundTintList(white);
+
+                    tvLblHistory.setTextColor(Color.WHITE);
                 } else {
                     clMain.setBackgroundColor(Color.WHITE);
-                    tvTitle.setTextColor(Color.BLACK);
-                    tvLblPrev.setTextColor(Color.BLACK);
+                    tvTitle.setTextColor(Color.GRAY);
+
+                    tvLblPrev.setTextColor(Color.GRAY);
                     etPrev.setTextColor(Color.BLACK);
+                    etPrev.setBackgroundTintList(gray);
+
+                    tvLblNew.setTextColor(Color.GRAY);
+                    etNew.setTextColor(Color.BLACK);
+                    etNew.setBackgroundTintList(gray);
+                    etNew.setHintTextColor(Color.GRAY);
+
+                    tvLblPipe.setTextColor(Color.GRAY);
+                    View v = spPipe.getSelectedView();
+                    ((TextView)v).setTextColor(Color.BLACK);
+
+                    tvLblPackage.setTextColor(Color.GRAY);
+                    rbPremium.setTextColor(Color.BLACK);
+                    rbRegular.setTextColor(Color.BLACK);
+                    rbBasic.setTextColor(Color.BLACK);
+
+                    tvLblBill.setTextColor(Color.GRAY);
+                    etResult.setTextColor(Color.BLACK);
+                    etResult.setBackgroundTintList(gray);
+
+                    tvLblHistory.setTextColor(Color.GRAY);
                 }
             }
         });
