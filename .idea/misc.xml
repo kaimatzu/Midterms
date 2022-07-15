@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Monarch_admin/AndroidStudioProjects/Midterms/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Monarch_admin/AndroidStudioProjects/Midterms/app/src/main/res/layout/bill_error_dialog.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Monarch_admin/AndroidStudioProjects/Midterms/app/src/main/res/layout/bill_error_dialog_noprev.xml" value="0.18704710144927536" />
         <entry key="..\:/Users/Monarch_admin/AndroidStudioProjects/Midterms/app/src/main/res/layout/bills_layout.xml" value="0.33" />
       </map>
     </option>

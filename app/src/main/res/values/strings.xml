@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Midterms</string>
+    <string name="invalid">Invalid input. \n\nDo you want to use the same reading difference as last month?</string>
+    <string name="invalid_noprev">Invalid input. \n\nPlease enter a positive numeric value.</string>
 </resources>

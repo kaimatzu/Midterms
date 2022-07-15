@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -30,14 +31,16 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BillDialogFragment.BillDialogListener{
     ArrayList<Pipe> pipeTypes;
     ArrayAdapter<Pipe> pipeAdapter;
     ArrayList<Bill> bills;
     BillsAdapter billsAdapter;
+    FragmentManager fm;
     int month;
     int pack;
     int last_consumption;
+    int last_difference;
     boolean nightMode = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         nightModeListenerMethod();
         radioGroupCheckOnChangedListener();
 
-
+        fm = getSupportFragmentManager();
     }
 
     // TODO Milestone A: Use Day-Night mode.
@@ -220,20 +223,31 @@ public class MainActivity extends AppCompatActivity {
                EditText etResult = findViewById(R.id.etResult);
                Spinner spPipe = findViewById(R.id.spPipe);
                last_consumption = Integer.parseInt(etPrev.getText().toString());
-               int curr = Integer.parseInt(etCurr.getText().toString());;
-               Pipe type = (Pipe) spPipe.getSelectedItem();
 
-               Bill bill = new Bill(last_consumption, curr, type, pack, month, nightMode);
+               String currString = etCurr.getText().toString();
+               int curr;
+               if(!currString.matches("^[0-9]+$")){
+                   BillDialogFragment dialog = new BillDialogFragment(month == 1);
+                   dialog.show(fm, "InvalidInput");
+               }
+               else if(Integer.parseInt(currString) < last_consumption){
+                   BillDialogFragment dialog = new BillDialogFragment(month == 1);
+                   dialog.show(fm, "InvalidInput");
+               }
+               else{
+                   curr = Integer.parseInt(currString);
+                   Pipe type = (Pipe) spPipe.getSelectedItem();
+                   Bill bill = new Bill(last_consumption, curr, type, pack, month, nightMode);
+                   etResult.setText(String.valueOf(bill.get_bill()));
+                   month++;
+                   last_difference = curr - last_consumption;
+                   last_consumption = curr;
+                   etPrev.setText(String.valueOf(last_consumption));
+                   etCurr.setText("");
+                   bills.add(bill);
+                   billsAdapter.notifyDataSetChanged();
+               }
 
-               etResult.setText(String.valueOf(bill.get_bill()));
-               month++;
-               last_consumption = curr;
-               etPrev.setText(String.valueOf(last_consumption));
-               etCurr.setText("");
-
-               bills.add(bill);
-
-               billsAdapter.notifyDataSetChanged();
            }
        });
     }
@@ -271,5 +285,31 @@ public class MainActivity extends AppCompatActivity {
         Spinner spPipe = findViewById(R.id. spPipe);
         pipeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, pipeTypes);
         spPipe.setAdapter(pipeAdapter);
+    }
+
+    @Override
+    public void onYesListenerMethod(DialogFragment dialog) {
+        EditText etPrev = findViewById(R.id.etPrev);
+        EditText etCurr = findViewById(R.id.etNew);
+        EditText etResult = findViewById(R.id.etResult);
+        Spinner spPipe = findViewById(R.id.spPipe);
+        last_consumption = Integer.parseInt(etPrev.getText().toString());
+
+        int curr = last_difference + last_consumption;
+
+        Pipe type = (Pipe) spPipe.getSelectedItem();
+        Bill bill = new Bill(last_consumption, curr, type, pack, month, nightMode);
+        etResult.setText(String.valueOf(bill.get_bill()));
+        month++;
+        last_consumption = curr;
+        etPrev.setText(String.valueOf(last_consumption));
+        etCurr.setText("");
+        bills.add(bill);
+        billsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onNoListenerMethod(DialogFragment dialog) {
+
     }
 }
