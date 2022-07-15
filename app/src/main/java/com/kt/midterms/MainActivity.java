@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<Pipe> pipeAdapter;
     ArrayList<Bill> bills;
     int month;
+    int pack;
     int last_consumption;
 
     @Override
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         btnCalculateListenerMethod();
         setHistoryAdapter();
         nightModeListenerMethod();
+        radioGroupCheckOnChangedListener();
     }
 
     // TODO Milestone A: Use Day-Night mode.
@@ -55,7 +58,47 @@ public class MainActivity extends AppCompatActivity {
 
     // // TODO Milestone 3: Calculate bill.
     private void btnCalculateListenerMethod() {
+        Button calculateButton = findViewById(R.id.btnCalculate);
+        calculateButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               EditText etPrev = findViewById(R.id.etPrev);
+               EditText etCurr = findViewById(R.id.etNew);
+               EditText etResult = findViewById(R.id.etResult);
+               Spinner spPipe = findViewById(R.id.spPipe);
+               last_consumption = Integer.parseInt(etPrev.getText().toString());
+               int curr = Integer.parseInt(etCurr.getText().toString());;
+               Pipe type = (Pipe) spPipe.getSelectedItem();
 
+               Bill bill = new Bill(last_consumption, curr, type, pack, month);
+
+               etResult.setText(String.valueOf(bill.get_bill()));
+               month++;
+               last_consumption = curr;
+               etPrev.setText(String.valueOf(last_consumption));
+               etCurr.setText("");
+           }
+       });
+    }
+
+    private void radioGroupCheckOnChangedListener(){
+        RadioGroup rg = (RadioGroup) findViewById(R.id.rg);
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.rbPremium:
+                        pack = 0;
+                        break;
+                    case R.id.rbRegular:
+                        pack = 1;
+                        break;
+                    case R.id.rbBasic:
+                        pack = 2;
+                        break;
+                }
+            }
+        });
     }
 
     /**
